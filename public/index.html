@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>East Side Pickleball – Book a Court</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="/assets/carousel-1.jpg" as="image">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark:#1a1005;--dark2:#2a1e08;--dark3:#3d2e12;
+  --bamboo:#c4923a;--bamboo2:#a87830;--bamboo-pale:#f5e8d0;
+  --green:#2d5016;--green2:#3a6b20;--green-pale:#eaf2e0;
+  --cream:#f0ebe0;--white:#faf7f2;
+  --text:#1a1005;--muted:#7a6550;--border:#ddd0b8;
+  --red:#c44444;--red-pale:#fee;
+  --r:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+
+/* ── HERO ──────────────────────────────────────────────── */
+.hero{
+  background:linear-gradient(160deg,#0f0804 0%,#1e1206 50%,#2a1a08 100%);
+  color:white;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 75% 50%,rgba(196,146,58,0.14) 0%,transparent 65%);
+  pointer-events:none;
+}
+.hero-inner{max-width:1100px;margin:0 auto;padding:16px;position:relative;z-index:1;}
+
+.hero-top{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.08);
+  gap:10px;flex-wrap:wrap;
+}
+.logo-pill{
+  background:var(--cream);border-radius:8px;padding:6px 12px;
+  display:flex;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.35);
+}
+.logo-pill img{height:36px;width:auto;}
+.hero-contact-top{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+}
+.hero-contact-top a{
+  color:rgba(255,255,255,0.85);font-size:0.73rem;
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);
+  padding:4px 9px;border-radius:6px;text-decoration:none;
+  display:flex;align-items:center;gap:4px;transition:background .2s;
+  white-space:nowrap;
+}
+.hero-contact-top a:hover{background:rgba(196,146,58,0.3);}
+
+.hero-body{padding:20px 0 14px;text-align:center;}
+.hero-body h2{
+  font-family:'Bebas Neue',cursive;
+  font-size:clamp(1.8rem,4vw,2.6rem);
+  letter-spacing:2px;line-height:1.1;margin-bottom:8px;
+}
+.hero-body h2 em{color:var(--bamboo);font-style:normal;}
+.hero-body p{font-size:0.85rem;opacity:0.72;line-height:1.6;max-width:520px;margin:0 auto 12px;}
+.hero-badges{display:flex;gap:6px;flex-wrap:wrap;margin:0 auto 6px;justify-content:center;max-width:500px;}
+.hero-badge{
+  background:rgba(196,146,58,0.15);border:1px solid rgba(196,146,58,0.3);
+  padding:4px 11px;border-radius:20px;font-size:0.7rem;
+  display:flex;align-items:center;gap:4px;color:rgba(255,255,255,0.9);
+}
+.hero-loc{font-size:0.76rem;opacity:0.55;margin-top:6px;letter-spacing:0.3px;}
+
+/* CAROUSEL */
+.carousel{
+  position:relative;max-width:600px;margin:16px auto 0;
+  aspect-ratio:1/1;border-radius:12px;overflow:hidden;
+  box-shadow:0 8px 32px rgba(0,0,0,0.45);
+}
+.carousel-track{
+  display:flex;transition:transform .4s ease;height:100%;
+}
+.carousel-slide{
+  flex:0 0 100%;height:100%;
+}
+.carousel-slide img{width:100%;height:100%;object-fit:cover;}
+.carousel-btn{
+  position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(15,8,4,0.55);color:white;border:1px solid rgba(255,255,255,0.2);
+  width:32px;height:32px;border-radius:50%;cursor:pointer;
+  font-size:1rem;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;z-index:10;
+}
+.carousel-btn:hover{background:rgba(196,146,58,0.75);}
+.carousel-btn.prev{left:8px;}
+.carousel-btn.next{right:8px;}
+.carousel-dots{
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  display:flex;gap:6px;z-index:10;
+}
+.carousel-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,255,255,0.4);cursor:pointer;transition:all .2s;
+}
+.carousel-dot.active{background:var(--bamboo);width:20px;border-radius:4px;}
+
+/* ── REMINDERS ─────────────────────────────────────────── */
+.reminders{background:var(--dark2);border-bottom:3px solid var(--bamboo);}
+.reminders-inner{
+  max-width:1100px;margin:0 auto;padding:8px 16px;
+  display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;
+}
+.rem-label{color:var(--bamboo);font-family:'Bebas Neue',cursive;font-size:0.78rem;letter-spacing:1.5px;white-space:nowrap;padding-top:2px;}
+.rem-chips{display:flex;gap:5px;flex-wrap:wrap;}
+.rem-chip{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);
+  color:rgba(255,255,255,0.82);border-radius:20px;
+  padding:3px 10px;font-size:0.7rem;display:flex;align-items:center;gap:4px;
+}
+
+/* ── CONTACT BAR ───────────────────────────────────────── */
+.contact-bar{background:var(--dark);color:white;}
+.contact-inner{
+  max-width:1100px;margin:0 auto;padding:8px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:6px;
+}
+.contact-left{font-size:0.74rem;opacity:0.8;display:flex;align-items:center;gap:6px;}
+.contact-links{display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.clink{
+  display:flex;align-items:center;gap:4px;color:white;text-decoration:none;
+  font-size:0.72rem;
+  background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);
+  padding:3px 9px;border-radius:6px;transition:background .2s;white-space:nowrap;
+}
+.clink:hover{background:rgba(196,146,58,0.4);border-color:rgba(196,146,58,0.5);}
+.clink svg{width:12px;height:12px;fill:currentColor;flex-shrink:0;}
+
+/* ── MAIN ──────────────────────────────────────────────── */
+main{max-width:1100px;margin:0 auto;padding:18px 12px 60px;}
+
+/* ── STEPS ─────────────────────────────────────────────── */
+.steps{display:flex;gap:0;margin-bottom:18px;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.07);}
+.step{
+  flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;
+  background:#e8e0d0;font-size:0.76rem;font-weight:500;color:var(--muted);
+  border-right:2px solid var(--cream);transition:all .3s;
+}
+.step:last-child{border-right:none;}
+.step.active{background:var(--dark);color:white;}
+.step-num{
+  width:19px;height:19px;border-radius:50%;
+  background:rgba(0,0,0,0.12);display:flex;align-items:center;justify-content:center;
+  font-size:0.68rem;font-weight:700;flex-shrink:0;
+}
+.step.active .step-num{background:rgba(196,146,58,0.35);}
+
+/* ── LAYOUT ─────────────────────────────────────────────── */
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;}
+
+/* ── PANEL ─────────────────────────────────────────────── */
+.panel{background:var(--white);border-radius:14px;box-shadow:0 2px 12px rgba(26,16,5,0.08);overflow:hidden;}
+.panel-header{
+  background:var(--dark);color:white;padding:12px 16px;
+  font-family:'Bebas Neue',cursive;font-size:1rem;letter-spacing:1.5px;
+  display:flex;align-items:center;gap:7px;
+}
+.panel-body{padding:14px;}
+
+/* ── CALENDAR ───────────────────────────────────────────── */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.cal-nav button{
+  width:30px;height:30px;border:1px solid var(--border);background:var(--white);
+  border-radius:8px;cursor:pointer;font-size:0.95rem;
+  display:flex;align-items:center;justify-content:center;transition:background .2s;
+}
+.cal-nav button:hover{background:var(--bamboo-pale);}
+.cal-month{font-family:'Bebas Neue',cursive;font-size:1.2rem;letter-spacing:1px;color:var(--dark);}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+.cal-dow{text-align:center;font-size:0.6rem;font-weight:600;color:var(--muted);text-transform:uppercase;padding:4px 0;letter-spacing:0.5px;}
+.cal-day{
+  aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-radius:7px;font-size:0.78rem;font-weight:500;cursor:pointer;
+  transition:all .15s;position:relative;gap:2px;
+}
+.cal-day:hover:not(.empty):not(.past){background:var(--bamboo-pale);}
+.cal-day.empty{cursor:default;}
+.cal-day.past{opacity:.3;cursor:default;}
+.cal-day.today{border:2px solid var(--bamboo);font-weight:700;}
+.cal-day.selected{background:var(--dark);color:white;}
+.cal-day.has-bookings .dot{width:5px;height:5px;background:var(--bamboo);border-radius:50%;}
+.cal-day.selected .dot{background:rgba(255,255,255,0.6);}
+.cal-day.full-day .dot{background:#c44;}
+
+/* ── TIME SLOTS ─────────────────────────────────────────── */
+.time-grid{display:flex;flex-direction:column;gap:4px;max-height:320px;overflow-y:auto;padding-right:3px;}
+.time-grid::-webkit-scrollbar{width:4px;}
+.time-grid::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+.time-slot{
+  display:flex;align-items:center;padding:8px 11px;border-radius:8px;
+  border:2px solid transparent;background:var(--bamboo-pale);cursor:pointer;
+  transition:all .15s;gap:10px;user-select:none;min-height:42px;
+}
+.time-slot:hover:not(.taken):not(.selected){border-color:var(--bamboo);background:#f0dfc0;}
+.time-slot.selected{background:var(--dark);color:white;border-color:var(--dark);}
+.time-slot.taken{background:#f0eaea;color:#a04040;cursor:not-allowed;opacity:.75;}
+.time-label{font-size:0.8rem;font-weight:500;flex:1;}
+.time-status{font-size:0.68rem;}
+.time-note{font-size:0.7rem;color:var(--muted);margin-top:7px;display:flex;align-items:center;gap:5px;}
+.sel-summary{
+  background:var(--bamboo-pale);border:1px solid var(--bamboo);
+  border-radius:8px;padding:8px 12px;font-size:0.78rem;
+  margin-top:7px;color:var(--dark2);font-weight:600;
+}
+.no-date-msg{text-align:center;color:var(--muted);padding:28px 14px;font-size:0.82rem;}
+.no-date-msg .big{font-size:1.6rem;margin-bottom:7px;}
+.date-slot-panel{margin-top:10px;}
+.sum-date-block{border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:8px;}
+.sum-date-header{font-weight:600;color:var(--dark);font-size:0.8rem;letter-spacing:0.3px;}
+
+/* ── FORM ───────────────────────────────────────────────── */
+.bk-summary{background:var(--bamboo-pale);border-radius:8px;padding:11px;margin-bottom:12px;font-size:0.8rem;}
+.sum-row{display:flex;justify-content:space-between;padding:3px 0;}
+.sum-row span:first-child{color:var(--muted);}
+.sum-row span:last-child{font-weight:600;}
+.fg{margin-bottom:12px;}
+.fg label{display:block;font-size:0.7rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.fg input,.fg textarea{
+  width:100%;padding:9px 11px;border:1.5px solid var(--border);
+  border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.86rem;
+  background:var(--white);transition:border .2s;color:var(--text);
+}
+.fg input:focus,.fg textarea:focus{outline:none;border-color:var(--bamboo);}
+.upload-area{
+  border:2px dashed var(--border);border-radius:10px;padding:18px;
+  text-align:center;cursor:pointer;transition:all .2s;
+}
+.upload-area:hover,.upload-area.has-file{border-color:var(--bamboo);background:var(--bamboo-pale);}
+.upload-area input{display:none;}
+.upload-icon{font-size:1.6rem;margin-bottom:5px;}
+.upload-text{font-size:0.75rem;color:var(--muted);}
+.upload-area.has-file .upload-text{color:var(--bamboo2);font-weight:600;}
+.upload-preview{max-width:100%;max-height:90px;border-radius:6px;margin-top:7px;margin:7px auto 0;}
+.pay-info-box{
+  background:linear-gradient(180deg,var(--white) 0%,var(--bamboo-pale) 100%);
+  border:1px solid var(--bamboo);border-radius:12px;padding:14px;text-align:center;
+}
+.pay-info-title{font-family:'Bebas Neue',cursive;font-size:1.15rem;letter-spacing:1.5px;color:var(--dark);margin-bottom:10px;}
+.pay-info-number{background:white;border-radius:10px;padding:10px;margin-bottom:8px;border:1px solid var(--border);}
+.pay-info-label{display:block;font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:3px;}
+.pay-info-value{
+  display:block;font-family:'Bebas Neue',cursive;font-size:1.45rem;letter-spacing:2px;
+  color:var(--dark);text-decoration:none;font-weight:700;
+}
+.pay-info-value:hover{color:var(--bamboo2);}
+.pay-info-name{font-size:0.75rem;color:var(--muted);margin-bottom:10px;}
+.pay-info-divider{
+  display:flex;align-items:center;gap:8px;margin:8px 0;
+  font-size:0.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);
+}
+.pay-info-divider:before,.pay-info-divider:after{content:"";flex:1;height:1px;background:var(--bamboo);}
+.pay-info-qr{
+  max-width:320px;width:100%;display:block;margin:8px auto 10px;
+  border-radius:8px;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.1);
+  image-rendering:crisp-edges;
+}
+.pay-info-hint{font-size:0.72rem;color:var(--muted);line-height:1.4;}
+.error-msg{
+  background:#fee;border:1px solid #fcc;color:#c44;
+  padding:8px 12px;border-radius:8px;font-size:0.78rem;margin-bottom:11px;
+}
+.btn{
+  width:100%;padding:12px;border:none;border-radius:10px;
+  font-family:'Bebas Neue',cursive;font-size:1.05rem;letter-spacing:2px;
+  cursor:pointer;transition:all .2s;
+}
+.btn-primary{background:var(--dark);color:white;}
+.btn-primary:hover{background:var(--dark2);transform:translateY(-1px);}
+.btn-primary:disabled{opacity:.45;cursor:not-allowed;transform:none;}
+
+/* ── DISCLAIMER ─────────────────────────────────────────── */
+.outdoor-notice{
+  background:#fff8e1;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;
+  padding:11px 14px;margin-bottom:14px;font-size:0.82rem;line-height:1.55;color:#78350f;
+}
+.outdoor-notice strong{display:block;margin-bottom:2px;font-size:0.85rem;}
+
+/* ── T&C ─────────────────────────────────────────────────── */
+.tnc-box{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:13px 14px;margin-bottom:12px;}
+.tnc-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.82rem;color:var(--green2);font-weight:600;margin-bottom:0;}
+.tnc-toggle input[type=checkbox]{width:16px;height:16px;accent-color:var(--green2);cursor:pointer;flex-shrink:0;}
+.tnc-content{display:none;margin-top:10px;font-size:0.78rem;color:#374151;line-height:1.6;border-top:1px solid #bbf7d0;padding-top:10px;}
+.tnc-content.open{display:block;}
+.tnc-content h4{font-size:0.8rem;color:var(--green2);margin:8px 0 3px;letter-spacing:.3px;}
+.tnc-content ul{padding-left:16px;margin:0;}
+.tnc-content li{margin-bottom:3px;}
+.tnc-read-link{font-size:0.75rem;color:var(--green2);text-decoration:underline;cursor:pointer;margin-left:4px;white-space:nowrap;}
+
+/* ── SUCCESS ────────────────────────────────────────────── */
+.success-screen{display:none;text-align:center;padding:36px 14px;}
+.success-screen.visible{display:block;}
+.success-icon{font-size:3.2rem;margin-bottom:12px;}
+.success-screen h2{font-family:'Bebas Neue',cursive;font-size:1.8rem;color:var(--dark);letter-spacing:2px;}
+.success-screen p{color:var(--muted);margin:5px 0;font-size:0.85rem;}
+.bk-card{
+  background:var(--dark);color:white;border-radius:14px;padding:18px;
+  margin:18px auto;max-width:320px;text-align:left;
+}
+.bk-card h3{font-family:'Bebas Neue',cursive;font-size:1.05rem;letter-spacing:1px;margin-bottom:9px;color:var(--bamboo);}
+.bk-card .bc-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:0.82rem;}
+.bk-card .bc-row:last-child{border-bottom:none;}
+.btn-new{
+  margin-top:14px;background:transparent;border:2px solid var(--dark);color:var(--dark);
+  font-family:'Bebas Neue',cursive;font-size:0.95rem;letter-spacing:2px;
+  padding:9px 20px;border-radius:8px;cursor:pointer;transition:all .2s;
+}
+.btn-new:hover{background:var(--dark);color:white;}
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+footer{
+  background:var(--dark);color:rgba(255,255,255,0.5);
+  text-align:center;padding:16px;font-size:0.73rem;line-height:1.7;
+}
+footer a{color:rgba(255,255,255,0.65);text-decoration:none;}
+footer a:hover{color:var(--bamboo);}
+
+.admin-link{
+  position:fixed;bottom:14px;right:14px;
+  background:rgba(26,16,5,0.92);color:white;
+  padding:6px 12px;border-radius:20px;font-size:0.7rem;text-decoration:none;
+  backdrop-filter:blur(4px);letter-spacing:.5px;z-index:50;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);
+}
+
+.spinner{display:inline-block;width:17px;height:17px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle;margin-right:6px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── MOBILE ─────────────────────────────────────────────── */
+@media(max-width:680px){
+  .layout{grid-template-columns:1fr;}
+  .steps .step span.step-label{display:none;}
+  .hero-contact-top .clink-phone{display:none;}
+  .hero-top{gap:6px;}
+  .contact-left{font-size:0.68rem;}
+  .hero-body h2{font-size:1.7rem;}
+  .panel-body{padding:11px;}
+  main{padding:14px 10px 60px;}
+  .cal-day{font-size:0.7rem;}
+
+}
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-top">
+      <div class="logo-pill">
+        <img src="/assets/logo-header.jpg" alt="Lakbai Coffee Pickleball">
+      </div>
+      <div class="hero-contact-top">
+        <a href="tel:09760402293" class="clink-phone">📞 0976-040-2293</a>
+        <a href="https://www.facebook.com/Lakbaicoffeeph" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:white;margin-right:2px"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>FB
+        </a>
+        <a href="https://www.instagram.com/lakbaicoffee/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:white;margin-right:2px"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>IG
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-body">
+      <h2>Play Pickleball at <em>East Side</em></h2>
+      <p>Outdoor pickleball court with nature vibes café — right in the heart of San Francisco, Agusan del Sur. Book your slot, grab a cup, and enjoy the game and camaraderie.</p>
+      <div class="hero-badges">
+        <div class="hero-badge">🏓 Outdoor Court</div>
+        <div class="hero-badge">☕ Café On-Site</div>
+        <div class="hero-badge">💡 Night Lights</div>
+        <div class="hero-badge">📅 Mon–Sun</div>
+      </div>
+      <div class="hero-loc"> Court Opens 1PM-11PM &nbsp;|&nbsp; Cafe Opens 10:30 AM – 10:30 PM</div>
+
+      <!-- Carousel -->
+      <div class="carousel" id="carousel">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide"><img src="/assets/carousel-1.jpg" alt="Court at sunset" loading="eager" fetchpriority="high"></div>
+          <div class="carousel-slide"><img src="/assets/carousel-2.jpg" alt="Players at Lakbai" loading="lazy" decoding="async"></div>
+          <div class="carousel-slide"><img src="/assets/carousel-3.jpg" alt="Lakbai Café" loading="lazy" decoding="async"></div>
+          <div class="carousel-slide"><img src="/assets/carousel-4.jpg" alt="Coffee" loading="lazy" decoding="async"></div>
+          <div class="carousel-slide"><img src="/assets/carousel-5.jpg" alt="Interior" loading="lazy" decoding="async"></div>
+          <div class="carousel-slide"><img src="/assets/carousel-6.jpg" alt="Court at night" loading="lazy" decoding="async"></div>
+          <div class="carousel-slide"><img src="/assets/venue-deck.jpg" alt="Lakbai Coffee bamboo deck" loading="lazy" decoding="async"></div>
+          <div class="carousel-slide"><img src="/assets/venue-treehouse.jpg" alt="Lakbai Coffee treehouse view" loading="lazy" decoding="async"></div>
+          <div class="carousel-slide"><img src="/assets/venue-interior.jpg" alt="Lakbai Coffee interior with lanterns" loading="lazy" decoding="async"></div>
+          <div class="carousel-slide"><img src="/assets/venue-food.jpg" alt="Lakbai Coffee food and drinks" loading="lazy" decoding="async"></div>
+          <div class="carousel-slide"><img src="/assets/venue-bar.jpg" alt="Lakbai Coffee bar counter" loading="lazy" decoding="async"></div>
+
+        </div>
+        <button class="carousel-btn prev" onclick="carouselMove(-1)">‹</button>
+        <button class="carousel-btn next" onclick="carouselMove(1)">›</button>
+        <div class="carousel-dots" id="carouselDots"></div>
+      </div>
+    </div>
+  </div>
+
+  <svg viewBox="0 0 1440 28" preserveAspectRatio="none" style="display:block;width:100%;height:22px;margin-top:12px;" fill="#f0ebe0"><path d="M0,16 C360,32 1080,0 1440,16 L1440,28 L0,28 Z"/></svg>
+</div>
+
+<!-- ── REMINDERS ── -->
+<div class="reminders">
+  <div class="reminders-inner">
+    <span class="rem-label">📢 Reminders</span>
+    <div class="rem-chips">
+      <div class="rem-chip">⛅ Outdoor court — check weather before booking!</div>
+      <div class="rem-chip">⏰ Arrive 10 mins early &amp; warm up.</div>
+      <div class="rem-chip">🤝 Be kind to all players.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CONTACT BAR ── -->
+<div class="contact-bar">
+  <div class="contact-inner">
+    <div class="contact-left">
+      📞 Questions? Call: <strong>0976-040-2293</strong> (10:30 AM–10:30PM)
+    </div>
+    <div class="contact-links">
+      <a href="https://www.facebook.com/Lakbaicoffeeph" target="_blank" rel="noopener" class="clink">
+        <svg viewBox="0 0 24 24"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>Facebook
+      </a>
+      <a href="https://www.instagram.com/lakbaicoffee/" target="_blank" rel="noopener" class="clink">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>Instagram
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── BOOKING ── -->
+<main>
+  <div class="steps">
+    <div class="step active"><span class="step-num">1</span> <span class="step-label">Pick a Date</span></div>
+    <div class="step"><span class="step-num">2</span> <span class="step-label">Choose Hours</span></div>
+    <div class="step"><span class="step-num">3</span> <span class="step-label">Your Details</span></div>
+  </div>
+
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">🎉</div>
+    <h2>Booking Confirmed!</h2>
+    <p>See you on the court! Your spot is secured.</p>
+    <div class="bk-card" id="confirmCard"></div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-top:7px">Questions? Call <strong>0976-040-2293</strong></p>
+    <button class="btn-new" onclick="resetBooking()">📅 Book Another Slot</button>
+  </div>
+
+  <div class="layout" id="bookingLayout">
+    <div>
+      <div class="panel" style="margin-bottom:14px">
+        <div class="panel-header">📅 Select Date(s)</div>
+        <div class="panel-body">
+          <div class="cal-nav">
+            <button onclick="prevMonth()">‹</button>
+            <div class="cal-month" id="calMonth"></div>
+            <button onclick="nextMonth()">›</button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">⏰ Select Time Slots</div>
+        <div class="panel-body">
+          <div id="dateSlotsContainer">
+            <div class="no-date-msg"><div class="big">👆</div>Select a date above</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">📋 Your Booking Details</div>
+      <div class="panel-body">
+        <div class="outdoor-notice">
+          <strong>⛅ Outdoor Court Notice</strong>
+          This is an <strong>outdoor pickleball court</strong>. Please be mindful of the weather conditions and your chosen time of booking. Games may be affected by rain or extreme heat. We recommend checking the weather forecast before heading out.
+        </div>
+        <div class="bk-summary" id="bookingSummary">
+          <div style="color:var(--muted);text-align:center;font-size:0.78rem;padding:6px 0">Select a date &amp; time first →</div>
+        </div>
+        <div id="errorMsg" class="error-msg" style="display:none"></div>
+        <div class="fg"><label>Full Name *</label><input type="text" id="custName" placeholder="e.g. Juan dela Cruz" maxlength="60"></div>
+        <div class="fg"><label>Phone Number *</label><input type="tel" id="custPhone" placeholder="e.g. 09XX-XXX-XXXX" maxlength="20"></div>
+        <div class="fg"><label>Notes (optional)</label><textarea id="custNotes" rows="2" placeholder="Number of players, requests..." style="resize:vertical"></textarea></div>
+        <div class="fg">
+          <label>Payment Info</label>
+          <div class="pay-info-box">
+            <div class="pay-info-title">💰 Pay via GCash @ 250/Hour</div>
+            <div class="pay-info-number">
+              <span class="pay-info-label">GCash Number</span>
+              <a href="tel:09760402293" class="pay-info-value">0976-040-2293</a>
+            </div>
+            <div class="pay-info-name">Account Name: <strong>RO**E L.</strong></div>
+            <div class="pay-info-divider"><span>OR scan QR to pay</span></div>
+            <img src="/assets/gcash-qr-optimized.jpg" alt="GCash QR Code" class="pay-info-qr">
+            <div class="pay-info-hint">After paying, upload your receipt below to secure your slot.</div>
+          </div>
+        </div>
+        <div class="fg">
+          <label>Payment Screenshot *</label>
+          <div class="upload-area" id="uploadArea" onclick="document.getElementById('payFile').click()">
+            <input type="file" id="payFile" accept="image/*" onchange="handleFileSelect(event)">
+            <div class="upload-icon">📸</div>
+            <div class="upload-text">Tap to upload GCash / Maya / Bank transfer screenshot</div>
+            <img id="uploadPreview" class="upload-preview" style="display:none">
+          </div>
+        </div>
+        <div class="tnc-box">
+          <label class="tnc-toggle">
+            <input type="checkbox" id="tncCheck" onchange="updateSubmitBtn()">
+            <span>I have read and agree to the <span class="tnc-read-link" onclick="toggleTnc(event)">Cancellation &amp; Booking Policy ▾</span></span>
+          </label>
+          <div class="tnc-content" id="tncContent">
+            <h4>⚠️ Please make sure to read before booking</h4>
+            <h4>🚫 Cancellation Policy</h4>
+            <ul>
+              <li>Please cancel at least <strong>12 hours before</strong> your scheduled time.</li>
+              <li>Late cancellations (less than 12 hours before) are <strong>non-refundable</strong>.</li>
+              <li>We only cancel or reschedule sessions due to <strong>rain or natural calamities</strong>.</li>
+              <li><strong>No-shows will not be refunded</strong> under any circumstances.</li>
+            </ul>
+            <h4>🔄 Rebooking</h4>
+            <ul>
+              <li>Rebooking requests must be made at least <strong>12 hours in advance</strong>.</li>
+              <li>Rebooking is subject to court availability.</li>
+              <li>To rebook, contact us directly at <strong>0976-040-2293</strong>.</li>
+            </ul>
+            <h4>🌧️ Weather Cancellations</h4>
+            <ul>
+              <li>In case of rain or a natural calamity, we will contact you to reschedule at no extra charge.</li>
+            </ul>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="submitBtn" onclick="submitBooking()" disabled>
+          Secure My Slot 🏓
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div style="margin-bottom:5px">
+    <img src="/assets/logo-header.jpg" alt="Lakbai" style="height:28px;margin:0 auto 6px;filter:invert(1) brightness(0.7);">
+  </div>
+  <div>📞 <a href="tel:09760402293">0976-040-2293</a> &nbsp;|&nbsp; Open Daily 10:30 AM–10:30PM</div>
+  <div style="margin-top:3px">
+    <a href="https://www.facebook.com/Lakbaicoffeeph" target="_blank">Facebook</a> &nbsp;|&nbsp;
+    <a href="https://www.instagram.com/lakbaicoffee/" target="_blank">Instagram</a>
+  </div>
+  <div style="margin-top:6px;opacity:0.4;">© 2025 Lakbai Coffee &amp; Pickleball · San Francisco, Agusan del Sur</div>
+</footer>
+
+<a href="/admin/" class="admin-link">🔒 Admin</a>
+
+<script>
+const API='/api/bookings';
+const OPEN_HOUR=13;
+const CLOSE_HOUR=23;
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+let viewYear=new Date().getFullYear(),viewMonth=new Date().getMonth();
+let bulkSelections=new Map();
+let allBookings={};
+let paymentBase64=null,paymentType=null;
+let customerOpenHour=OPEN_HOUR;
+let customerCloseHour=CLOSE_HOUR;
+
+async function loadSettings(){
+  try{
+    const r=await fetch(`${API}/settings`);
+    const d=await r.json();
+    if(d.settings){
+      customerOpenHour=d.settings.customerOpenHour??OPEN_HOUR;
+      customerCloseHour=d.settings.customerCloseHour??CLOSE_HOUR;
+    }
+  }catch(e){}
+}
+
+// ── CAROUSEL ──
+let carouselIndex=0;
+const carouselSlides=document.querySelectorAll('.carousel-slide').length;
+const carouselDotsEl=document.getElementById('carouselDots');
+for(let i=0;i<carouselSlides;i++){
+  const dot=document.createElement('div');
+  dot.className='carousel-dot'+(i===0?' active':'');
+  dot.onclick=()=>carouselGo(i);
+  carouselDotsEl.appendChild(dot);
+}
+function carouselMove(dir){carouselGo(carouselIndex+dir);}
+function carouselGo(i){
+  if(i<0)i=carouselSlides-1;
+  if(i>=carouselSlides)i=0;
+  carouselIndex=i;
+  document.getElementById('carouselTrack').style.transform=`translateX(-${i*100}%)`;
+  document.querySelectorAll('.carousel-dot').forEach((d,idx)=>d.classList.toggle('active',idx===i));
+}
+let carouselPaused=false;
+document.addEventListener('visibilitychange',()=>{carouselPaused=document.hidden;});
+setInterval(()=>{if(!carouselPaused)carouselMove(1);},4000);
+
+function formatHour(h){
+  const hrs=Math.floor(h),mins=h%1===0.5?'30':'00',period=hrs<12?'AM':'PM';
+  const d=hrs>12?hrs-12:(hrs===0?12:hrs);
+  return `${d}:${mins} ${period}`;
+}
+
+async function loadMonthBookings(){
+  const month=`${viewYear}-${String(viewMonth+1).padStart(2,'0')}`;
+  try{
+    const r=await fetch(`${API}?month=${month}`);
+    const d=await r.json();
+    allBookings={};
+    (d.bookings||[]).forEach(b=>{
+      if(b.status==='cancelled'||b.status==='on_hold')return;
+      if(!allBookings[b.date])allBookings[b.date]=[];
+      allBookings[b.date].push(b);
+    });
+  }catch(e){console.error(e);}
+}
+
+function renderCalendarUI(){
+  document.getElementById('calMonth').textContent=`${MONTHS[viewMonth]} ${viewYear}`;
+  const grid=document.getElementById('calGrid');
+  grid.innerHTML='';
+  DAYS.forEach(d=>{const e=document.createElement('div');e.className='cal-dow';e.textContent=d;grid.appendChild(e);});
+  const firstDay=new Date(viewYear,viewMonth,1).getDay();
+  const daysInMonth=new Date(viewYear,viewMonth+1,0).getDate();
+  const today=new Date();
+  for(let i=0;i<firstDay;i++){const e=document.createElement('div');e.className='cal-day empty';grid.appendChild(e);}
+  for(let d=1;d<=daysInMonth;d++){
+    const dateStr=`${viewYear}-${String(viewMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const cellDate=new Date(viewYear,viewMonth,d);
+    const isToday=d===today.getDate()&&viewMonth===today.getMonth()&&viewYear===today.getFullYear();
+    const isPast=cellDate<new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    const el=document.createElement('div');
+    el.className='cal-day'+(isToday?' today':'')+(isPast?' past':'')+(bulkSelections.has(dateStr)?' selected':'');
+    const dayBks=allBookings[dateStr]||[];
+    const totalBooked=dayBks.reduce((s,b)=>s+(b.endHour-b.startHour),0);
+    const num=document.createElement('span');num.textContent=d;el.appendChild(num);
+    if(dayBks.length>0){
+      el.classList.add('has-bookings');
+      if(totalBooked>=(customerCloseHour-customerOpenHour))el.classList.add('full-day');
+      const dot=document.createElement('div');dot.className='dot';el.appendChild(dot);
+    }
+    if(!isPast)el.addEventListener('click',()=>toggleDate(dateStr));
+    grid.appendChild(el);
+  }
+}
+
+async function renderCalendar(){
+  await loadMonthBookings();
+  renderCalendarUI();
+}
+
+function prevMonth(){viewMonth--;if(viewMonth<0){viewMonth=11;viewYear--;}renderCalendar();}
+function nextMonth(){viewMonth++;if(viewMonth>11){viewMonth=0;viewYear++;}renderCalendar();}
+
+function toggleDate(dateStr){
+  if(bulkSelections.has(dateStr)){bulkSelections.delete(dateStr);}
+  else{bulkSelections.set(dateStr,new Set());}
+  renderCalendarUI();renderDateSlotsContainer();updateSummary();updateSubmitBtn();
+  if(window.innerWidth<681&&bulkSelections.size>0){
+    setTimeout(()=>document.getElementById('dateSlotsContainer').scrollIntoView({behavior:'smooth',block:'start'}),100);
+  }
+}
+
+function removeDate(dateStr){
+  bulkSelections.delete(dateStr);
+  renderCalendarUI();renderDateSlotsContainer();updateSummary();updateSubmitBtn();
+}
+
+function renderDateSlotsContainer(){
+  const container=document.getElementById('dateSlotsContainer');
+  if(bulkSelections.size===0){
+    container.innerHTML='<div class="no-date-msg"><div class="big">👆</div>Select a date above</div>';
+    return;
+  }
+  container.innerHTML='';
+  for(const[dateStr,slots] of bulkSelections){
+    const[y,m,d]=dateStr.split('-');
+    const shortDate=new Date(y,m-1,d).toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});
+    const panel=document.createElement('div');
+    panel.className='panel date-slot-panel';
+    const header=document.createElement('div');
+    header.className='panel-header';
+    header.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:10px 14px;font-size:0.9rem';
+    header.innerHTML=`<span>⏰ ${shortDate}</span><button onclick="removeDate('${dateStr}')" style="background:rgba(255,255,255,0.2);border:none;color:white;border-radius:6px;cursor:pointer;padding:2px 8px;font-size:0.85rem">✕</button>`;
+    panel.appendChild(header);
+    const body=document.createElement('div');
+    body.className='panel-body';
+    const grid=document.createElement('div');
+    grid.className='time-grid';
+    const dayBks=allBookings[dateStr]||[];
+    const bookedRanges=dayBks.map(b=>({start:b.startHour,end:b.endHour,name:b.name}));
+    for(let h=customerOpenHour;h<customerCloseHour;h++){
+      const end=h+1;
+      const isBooked=bookedRanges.some(r=>h<r.end&&end>r.start);
+      const booker=isBooked?bookedRanges.find(r=>h<r.end&&end>r.start):null;
+      const el=document.createElement('div');
+      el.className='time-slot'+(isBooked?' taken':'')+(slots.has(h)?' selected':'');
+      const lbl=document.createElement('div');lbl.className='time-label';lbl.textContent=`${formatHour(h)} – ${formatHour(end)}`;
+      const st=document.createElement('div');st.className='time-status';
+      if(isBooked){const init=booker&&booker.name?booker.name[0].toUpperCase():'?';st.textContent=`🔒 ${init}***`;}
+      else if(slots.has(h)){st.textContent='✓ Selected';}
+      else{st.textContent='Available';st.style.color='var(--muted)';}
+      el.appendChild(lbl);el.appendChild(st);
+      if(!isBooked)el.addEventListener('click',()=>toggleSlotOnDate(dateStr,h));
+      grid.appendChild(el);
+    }
+    body.appendChild(grid);
+    panel.appendChild(body);
+    container.appendChild(panel);
+  }
+}
+
+function toggleSlotOnDate(dateStr,h){
+  const slots=bulkSelections.get(dateStr);
+  if(!slots)return;
+  if(slots.has(h))slots.delete(h);else slots.add(h);
+  renderDateSlotsContainer();updateSummary();updateSubmitBtn();
+}
+
+function slotsToRanges(slots){
+  const sorted=[...slots].sort((a,b)=>a-b);
+  if(sorted.length===0)return[];
+  const ranges=[];
+  let rs=sorted[0],prev=sorted[0];
+  for(let i=1;i<sorted.length;i++){
+    if(sorted[i]===prev+1){prev=sorted[i];}
+    else{ranges.push([rs,prev+1]);rs=sorted[i];prev=sorted[i];}
+  }
+  ranges.push([rs,prev+1]);
+  return ranges;
+}
+
+function updateSummary(){
+  const el=document.getElementById('bookingSummary');
+  let totalSlots=0;
+  for(const slots of bulkSelections.values())totalSlots+=slots.size;
+  if(totalSlots===0){
+    el.innerHTML='<div style="color:var(--muted);text-align:center;font-size:0.78rem;padding:6px 0">Select a date &amp; time first →</div>';return;
+  }
+  let html='';
+  let grandTotal=0;
+  for(const[dateStr,slots] of bulkSelections){
+    if(slots.size===0)continue;
+    const[y,m,d]=dateStr.split('-');
+    const dateLabel=new Date(y,m-1,d).toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});
+    const ranges=slotsToRanges(slots);
+    const timeRows=ranges.map(r=>`<div class="sum-row"><span style="padding-left:8px">⏰ ${formatHour(r[0])} – ${formatHour(r[1])}</span><span>${r[1]-r[0]}h</span></div>`).join('');
+    grandTotal+=slots.size;
+    html+=`<div class="sum-date-block">
+      <div class="sum-date-header">📅 ${dateLabel}</div>
+      ${timeRows}
+    </div>`;
+  }
+  html+=`<div class="sum-row" style="font-weight:700;margin-top:4px"><span>Total Hours</span><span>${grandTotal}h</span></div>
+    <div class="sum-row" style="font-weight:700;color:#1e40af;border-top:1px solid #bfdbfe;margin-top:4px;padding-top:8px"><span>Total Due</span><span>₱${(grandTotal*250).toLocaleString()}</span></div>`;
+  el.innerHTML=html;
+}
+
+function updateSubmitBtn(){
+  let total=0;for(const s of bulkSelections.values())total+=s.size;
+  const agreed=document.getElementById('tncCheck').checked;
+  document.getElementById('submitBtn').disabled=total===0||!agreed;
+}
+
+function toggleTnc(e){
+  e.preventDefault();e.stopPropagation();
+  const c=document.getElementById('tncContent');
+  c.classList.toggle('open');
+  e.target.textContent=c.classList.contains('open')?'Cancellation & Booking Policy ▴':'Cancellation & Booking Policy ▾';
+}
+
+function compressImage(file){
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>{
+      const MAX=1024;
+      let w=img.width,h=img.height;
+      if(w>MAX||h>MAX){if(w>h){h=Math.round(h*MAX/w);w=MAX;}else{w=Math.round(w*MAX/h);h=MAX;}}
+      const canvas=document.createElement('canvas');
+      canvas.width=w;canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      resolve(canvas.toDataURL('image/jpeg',0.7));
+    };
+    img.src=URL.createObjectURL(file);
+  });
+}
+
+async function handleFileSelect(e){
+  const file=e.target.files[0];if(!file)return;
+  document.querySelector('#uploadArea .upload-text').textContent='Processing...';
+  try{
+    paymentBase64=await compressImage(file);
+    paymentType='image/jpeg';
+    document.getElementById('uploadArea').classList.add('has-file');
+    document.querySelector('#uploadArea .upload-text').textContent=`✓ ${file.name}`;
+    const prev=document.getElementById('uploadPreview');prev.src=paymentBase64;prev.style.display='block';
+  }catch(err){
+    document.querySelector('#uploadArea .upload-text').textContent='Failed to process image. Try again.';
+  }
+}
+
+async function submitBooking(){
+  const name=document.getElementById('custName').value.trim();
+  const phone=document.getElementById('custPhone').value.trim();
+  const notes=document.getElementById('custNotes').value.trim();
+  const errEl=document.getElementById('errorMsg');
+  errEl.style.display='none';
+  if(!name)return showError('Please enter your name.');
+  if(!phone)return showError('Please enter your phone number.');
+  let totalSlots=0;for(const s of bulkSelections.values())totalSlots+=s.size;
+  if(totalSlots===0)return showError('Please select a date and time.');
+  if(!paymentBase64)return showError('Please upload your payment screenshot to secure your spot.');
+
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>Securing...';
+  const submittedBookings=[];
+  let firstCall=true;
+  try{
+    for(const[dateStr,slots] of bulkSelections){
+      if(slots.size===0)continue;
+      const ranges=slotsToRanges(slots);
+      for(const[start,end] of ranges){
+        const res=await fetch(API,{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+            name,phone,notes,
+            date:dateStr,
+            startHour:start,
+            endHour:end,
+            paymentData:firstCall?paymentBase64:null,
+            paymentType:firstCall?paymentType:null
+          })
+        });
+        const data=await res.json();
+        if(!res.ok){
+          showError(data.error||`Couldn't book ${formatHour(start)}–${formatHour(end)} on ${dateStr}.${submittedBookings.length?' Some slots were already booked.':''}`);
+          btn.disabled=false;btn.textContent='Secure My Slot 🏓';
+          return;
+        }
+        submittedBookings.push(data.booking);
+        firstCall=false;
+      }
+    }
+    showSuccess(submittedBookings,name,phone);
+  }catch(e){
+    showError('Network error. Please try again.');
+    btn.disabled=false;
+    btn.textContent='Secure My Slot 🏓';
+  }
+}
+
+function showError(msg){const el=document.getElementById('errorMsg');el.textContent=msg;el.style.display='block';el.scrollIntoView({behavior:'smooth',block:'nearest'});}
+
+function showSuccess(bookings,name,phone){
+  document.getElementById('bookingLayout').style.display='none';
+  document.querySelector('.steps').style.display='none';
+  const sc=document.getElementById('successScreen');sc.classList.add('visible');
+  const list=Array.isArray(bookings)?bookings:[bookings];
+  const totalHours=list.reduce((s,b)=>s+(b.endHour-b.startHour),0);
+  const byDate={};
+  list.forEach(b=>{if(!byDate[b.date])byDate[b.date]=[];byDate[b.date].push(b);});
+  let dateRows='';
+  for(const[dateStr,bks] of Object.entries(byDate)){
+    const[y,m,d]=dateStr.split('-');
+    const dateLabel=new Date(y,m-1,d).toLocaleDateString('en-PH',{weekday:'short',month:'short',day:'numeric'});
+    const timeStr=bks.map(b=>`${formatHour(b.startHour)}–${formatHour(b.endHour)}`).join(', ');
+    dateRows+=`<div class="bc-row"><span>📅 ${dateLabel}</span><span>${timeStr}</span></div>`;
+  }
+  document.getElementById('confirmCard').innerHTML=`
+    <h3>🏓 Booking Details</h3>
+    <div class="bc-row"><span>Name</span><span>${name}</span></div>
+    <div class="bc-row"><span>Phone</span><span>${phone}</span></div>
+    ${dateRows}
+    <div class="bc-row"><span>Total Duration</span><span>${totalHours}h</span></div>
+    <div class="bc-row" style="font-weight:700;color:#1e40af;border-top:1px solid #bfdbfe;margin-top:4px;padding-top:8px"><span>Total Due</span><span>₱${(totalHours*250).toLocaleString()}</span></div>
+    <div class="bc-row"><span>Status</span><span>✅ Confirmed</span></div>
+  `;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function resetBooking(){
+  bulkSelections=new Map();paymentBase64=null;paymentType=null;
+  document.getElementById('tncCheck').checked=false;
+  document.getElementById('tncContent').classList.remove('open');
+  document.getElementById('custName').value='';
+  document.getElementById('custPhone').value='';
+  document.getElementById('custNotes').value='';
+  document.getElementById('payFile').value='';
+  document.getElementById('uploadArea').classList.remove('has-file');
+  document.querySelector('#uploadArea .upload-text').textContent='Tap to upload GCash / Maya / Bank transfer screenshot';
+  document.getElementById('uploadPreview').style.display='none';
+  document.getElementById('successScreen').classList.remove('visible');
+  document.getElementById('bookingLayout').style.display='grid';
+  document.querySelector('.steps').style.display='flex';
+  document.getElementById('submitBtn').disabled=true;
+  document.getElementById('submitBtn').textContent='Secure My Slot 🏓';
+  renderCalendar();renderDateSlotsContainer();updateSummary();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+(async()=>{await loadSettings();renderCalendar();})();
+</script>
+</body>
+</html>
